@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tarefas</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqx61gVWgIGe33WNlDwZ5wV1Us1kc9b9+wbAXk/v6d9eEe4qU26PDw9RHd" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="text-center mb-5">Lista de Tarefas</h2>
+        <div class="input-group mb-5">
+          <input type="text" placeholder="Adicionar tarefa" [(ngModel)]="newTask" class="form-control">
+          <div class="input-group-append">
+            <button (click)="addTask()" class="btn btn-primary">Adicionar</button>
+          </div>
+        </div>
+
+        <ul class="list-group shadow">
+          <li *ngFor="let task of tasks; let i = index" class="list-group-item d-flex align-items-center justify-content-between">
+            {{ task }}
+            <div class="btn-group">
+              <button (click)="removeTask(i)" class="btn btn-danger btn-sm ms-2">Excluir</button>
+              <button (click)="showUpdateInput(i)" class="btn btn-primary btn-sm ms-4">Atualizar</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Modal -->
+      <div *ngIf="selectedTaskIndex !== null" class="modal fade" id="updateTaskModal" tabindex="-1" aria-labelledby="updateTaskModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateTaskModalLabel">Atualizar Tarefa</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="text" [(ngModel)]="updatedTasks[selectedTaskIndex]" placeholder="Nova tarefa" class="form-control">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeUpdateTaskModal()">Fechar</button>
+              <button type="button" class="btn btn-primary" (click)="updateTask(); closeUpdateTaskModal();">Salvar mudanças</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h2 class="text-center mb-4">Extrair dados para excel</h2>
+        <form class="p-4 border rounded shadow">
+          <div class="form-group">
+            <button (click)="exportToXLS()" class="btn btn-primary mt-2">Exportar para XLS</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2eCH9LbefzwW8O05F3F1NJtS3kcn9kB1H/Qm9itOHbAwWVE3h+dstcU/Ji5" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFT8WB6iH9MFk3rEaWtnE86LeE949PQ/u0783nVfW4FxoCByB08JW6OWX93d5" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shN6BeAnTVW6XGQc5po5fE98s/H5k/Z0qH0LJg" crossorigin="anonymous"></script>
+</body>
+</html>

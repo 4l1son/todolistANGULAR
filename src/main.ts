@@ -1,6 +1,13 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { ApplicationRef, enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+import { AppModule } from './app/app.module'; // Importe o módulo AppModule
+
+import { AppComponent } from './app/app.component'; 
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .then(moduleRef => {
+    const appRef = moduleRef.injector.get(ApplicationRef);
+    appRef.bootstrap(AppComponent); 
+  })
+  .catch(err => console.error(err));
